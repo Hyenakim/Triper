@@ -17,5 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("Items");
         mDatabase.child("ID").setValue("ASDF");
+        //////////////////////////////////////
+        /////////////////////
     }
 }
