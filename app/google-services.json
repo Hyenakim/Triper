@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "332818967134",
+    "firebase_url": "https://triper-ed6ff.firebaseio.com",
+    "project_id": "triper-ed6ff",
+    "storage_bucket": "triper-ed6ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:332818967134:android:cd795bb94ab5e89c",
+        "android_client_info": {
+          "package_name": "com.example.gpsk1.triper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "332818967134-l6tp497f7brqtqp01tm5d22ndtd7brc4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gpsk1.triper",
+            "certificate_hash": "f373e41d0ccabcb41916f2101f5f8a2923b1c0f3"
+          }
+        },
+        {
+          "client_id": "332818967134-p2na956dn4cid85852kfut5qv73iodb8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJLETduHlNlHy3BMkvSPAfKPH50zDO3oU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "332818967134-p2na956dn4cid85852kfut5qv73iodb8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
