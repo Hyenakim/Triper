@@ -29,7 +29,8 @@
         android:id="@+id/signupActivity_edittext_password"
         android:hint="패스워드"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"/>
     <Button
         android:text="회원가입"
         android:id="@+id/signupActivity_edittext_signup"
