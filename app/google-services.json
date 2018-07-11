@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "332818967134-oj5mjii4stuftrca11lj556irq4uivf2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gpsk1.triper",
+            "certificate_hash": "9174319c42a68c5759587cb87541e6909ea8922c"
+          }
+        },
+        {
           "client_id": "332818967134-p2na956dn4cid85852kfut5qv73iodb8.apps.googleusercontent.com",
           "client_type": 3
         }
