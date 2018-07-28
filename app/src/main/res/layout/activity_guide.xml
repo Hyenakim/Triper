@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    tools:context=".GuideActivity">
+
+    <ImageView
+        android:src="@drawable/baseline_add_to_photos_black_24"
+        android:id="@+id/GuideActivity_imageview_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="50dp"/>
+    <EditText
+        android:id="@+id/GuideActivity_edittext_email"
+        android:hint="이메일"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/GuideActivity_edittext_name"
+        android:hint="이름"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/GuideActivity_edittext_password"
+        android:hint="패스워드"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="지역"
+        android:layout_gravity="left"/>
+    <Spinner
+        android:id="@+id/GuideActivity_spinner_place"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="언어"
+            android:layout_gravity="left"/>
+        <Spinner
+            android:id="@+id/GuideActivity_spinner_language1"
+            android:layout_marginLeft="25dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"></Spinner>
+        <Spinner
+            android:id="@+id/GuideActivity_spinner_language2"
+            android:layout_marginLeft="25dp"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"></Spinner>
+    </LinearLayout>
+
+    <Button
+        android:text="회원가입"
+        android:id="@+id/GuideActivity_button_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
