@@ -19,7 +19,8 @@
         <activity android:name=".SignupActivity" />
         <activity android:name=".Main2Activity" />
         <activity android:name=".SelectActivity" />
-        <activity android:name=".GuideActivity"></activity>
+        <activity android:name=".GuideActivity" />
+        <activity android:name=".chat.MessageActivity"></activity>
     </application>
 
 </manifest>
