@@ -122,7 +122,7 @@ public class GuideActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.v("시작", "시작");
                if(email.getText().toString() == null || password.getText().toString() == null || name.getText().toString() == null || where == null ||
-                       speech1 == null ){
+                       speech1 == null || imageUri == null ){
                    Toast.makeText(GuideActivity.this, "빈 칸이 존재합니다.", Toast.LENGTH_LONG).show();
                    return;
                }
@@ -143,6 +143,7 @@ public class GuideActivity extends AppCompatActivity {
                                 guidemodel.language1 = speech1;
                                 guidemodel.language2 = speech2;
                                 guidemodel.profilImageUrl = imageUri;
+                                guidemodel.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                                 FirebaseDatabase.getInstance().getReference().child("Guide").child(uid).setValue(guidemodel);
                                 Toast.makeText(GuideActivity.this, "회원가입 완료", Toast.LENGTH_LONG).show();

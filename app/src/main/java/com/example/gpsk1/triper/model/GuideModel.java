@@ -6,5 +6,6 @@ public class GuideModel {
     public String place;
     public String language1;
     public String language2;
+    public String uid;
 
 }

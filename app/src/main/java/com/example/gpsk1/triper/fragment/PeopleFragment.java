@@ -1,6 +1,8 @@
 package com.example.gpsk1.triper.fragment;
 
+import android.app.ActivityOptions;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.gpsk1.triper.R;
+import com.example.gpsk1.triper.chat.MessageActivity;
 import com.example.gpsk1.triper.model.GuideModel;
 import com.example.gpsk1.triper.model.UserModel;
 import com.google.firebase.database.DataSnapshot;
@@ -68,7 +71,7 @@ public class PeopleFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
             //이미지 올리기
 
@@ -81,6 +84,16 @@ public class PeopleFragment extends Fragment {
             ((CustomViewHolder)holder).placeTV.setText(userModels.get(position).place);
             ((CustomViewHolder)holder).lan1TV.setText(userModels.get(position).language1);
             ((CustomViewHolder)holder).lan2TV.setText(userModels.get(position).language2);
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), MessageActivity.class);
+                    intent.putExtra("destinationUid", userModels.get(position).uid);
+                    ActivityOptions activityOptions = ActivityOptions.makeCustomAnimation(v.getContext(), R.anim.fromright, R.anim.toleft);
+                    startActivity(intent, activityOptions.toBundle());
+                }
+            });
 
         }
 
