@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.gpsk1.triper.model.UserModel;
 //import com.google.android.gms.internal.ui;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
@@ -70,7 +71,7 @@ public class SignupActivity extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(email.getText().toString()==null||name.getText().toString()==null||password.getText().toString()==null) { //빈칸이 있으면 다시
+                if(email.getText().toString()==null||name.getText().toString()==null||password.getText().toString()==null||imageUri==null) { //빈칸이 있으면 다시
                     return;
                 }
                 FirebaseAuth.getInstance()
@@ -92,7 +93,13 @@ public class SignupActivity extends AppCompatActivity {
                                         userModel.profieImageUrl = imageUrl;
                                         userModel.uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                                        FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel);
+                                        FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                SignupActivity.this.finish();//회원가입 성공시 창 닫기
+                                            }
+                                        });
+
                                     }
                                 });
 

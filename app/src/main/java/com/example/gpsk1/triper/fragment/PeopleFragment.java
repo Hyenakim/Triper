@@ -21,6 +21,7 @@ import com.example.gpsk1.triper.R;
 import com.example.gpsk1.triper.chat.MessageActivity;
 import com.example.gpsk1.triper.model.GuideModel;
 import com.example.gpsk1.triper.model.UserModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -51,6 +52,7 @@ public class PeopleFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     userModels.clear(); //누적된 데이터 클리어
                     for(DataSnapshot snapshot :dataSnapshot.getChildren()){
+
                         userModels.add(snapshot.getValue(GuideModel.class)); //리스트에 추가
                     }
                     notifyDataSetChanged(); //새로고침
@@ -75,10 +77,10 @@ public class PeopleFragment extends Fragment {
 
             //이미지 올리기
 
-            Glide.with(holder.itemView.getContext())
-                    .load(userModels.get(position).profilImageUrl)
-                    .apply(new RequestOptions().circleCrop())
-                    .into(((CustomViewHolder)holder).imageView);
+//            Glide.with(holder.itemView.getContext())
+//                    .load(userModels.get(position).profilImageUrl)
+//                    .apply(new RequestOptions().circleCrop())
+//                    .into(((CustomViewHolder)holder).imageView);
             //텍스트 올리기
             ((CustomViewHolder)holder).textView.setText(userModels.get(position).guideName);
             ((CustomViewHolder)holder).placeTV.setText(userModels.get(position).place);
