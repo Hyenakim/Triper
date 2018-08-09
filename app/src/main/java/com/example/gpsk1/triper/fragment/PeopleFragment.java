@@ -81,6 +81,8 @@ public class PeopleFragment extends Fragment {
 //                    .load(userModels.get(position).profilImageUrl)
 //                    .apply(new RequestOptions().circleCrop())
 //                    .into(((CustomViewHolder)holder).imageView);
+
+
             //텍스트 올리기
             ((CustomViewHolder)holder).textView.setText(userModels.get(position).guideName);
             ((CustomViewHolder)holder).placeTV.setText(userModels.get(position).place);
