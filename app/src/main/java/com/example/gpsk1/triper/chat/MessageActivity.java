@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.gpsk1.triper.MyApplication;
 import com.example.gpsk1.triper.R;
 import com.example.gpsk1.triper.model.ChatModel;
 import com.example.gpsk1.triper.model.GuideModel;
@@ -51,6 +52,7 @@ public class MessageActivity extends AppCompatActivity {
     private String uid;
     private String chatRoomUid;
 
+
     private RecyclerView recyclerView;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
@@ -59,6 +61,8 @@ public class MessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
+
+
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();//채팅을 요구하는 아이디(로그인된 아이디)
         destinationUid = getIntent().getStringExtra("destinationUid"); //채팅을 당하는 아이디
         button = (Button)findViewById(R.id.messageActivity_button);

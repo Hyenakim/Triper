@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.gpsk1.triper.Main2Activity;
 import com.example.gpsk1.triper.R;
 import com.example.gpsk1.triper.chat.MessageActivity;
 import com.example.gpsk1.triper.model.ChatModel;
@@ -41,11 +42,13 @@ import java.util.TimeZone;
 import java.util.TreeMap;
 
 public class ChatFragment extends Fragment {
+    private int mode;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        mode = ((Main2Activity)getActivity()).getMode(); // 전역변수 값 받아오기
         View view = inflater.inflate(R.layout.fragment_chat,container,false);
 
         RecyclerView recyclerView =(RecyclerView)view.findViewById(R.id.chatfragment_recyclerview);
@@ -103,7 +106,10 @@ public class ChatFragment extends Fragment {
             }
             // destination이 누군지
             System.out.println(destinationUid);
-            FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            /* 관광객일 때 채팅 리스트 */
+            if(mode == 0){
+            FirebaseDatabase.getInstance().getReference().child("Guide").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                    GuideModel guideModel = dataSnapshot.getValue(GuideModel.class);
@@ -119,7 +125,28 @@ public class ChatFragment extends Fragment {
                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
-            });
+            }); //끝
+                  }
+                  /* 가이드 일 때 채팅 리스트*/
+                  else {
+                FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        UserModel userModel = dataSnapshot.getValue(UserModel.class);
+                    /*Glide.with(customViewHolder.itemView.getContext())
+                            .load(userModel.profieImageUrl)
+                            .apply(new RequestOptions().circleCrop())
+                            .into(customViewHolder.imageView); */
+                        //System.out.println(guideModel.guideName);
+                        customViewHolder.textView_title.setText(userModel.userName); // 상대방 이름 = 채팅방 이름
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                }); //끝
+            }
             // 채팅방 마지막 메시지 : 메시지를 내림 차순으로 정렬 후 마지막 메시지의 키값을 가져옴
             Map<String, ChatModel.Comment> commentMap = new TreeMap<>(Collections.<String>reverseOrder());
             commentMap.putAll(chatModels.get(position).comments);

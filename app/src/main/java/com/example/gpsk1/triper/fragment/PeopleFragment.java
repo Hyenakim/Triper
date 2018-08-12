@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.gpsk1.triper.Main2Activity;
+import com.example.gpsk1.triper.MyApplication;
 import com.example.gpsk1.triper.R;
 import com.example.gpsk1.triper.chat.MessageActivity;
 import com.example.gpsk1.triper.model.GuideModel;
@@ -33,28 +35,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PeopleFragment extends Fragment {
+    private int mode;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        /* Main2Activity에서 값 받아오기 */
+        mode = ((Main2Activity)getActivity()).getMode();
+
         View view = inflater.inflate(R.layout.fragment_people,container,false);
         RecyclerView recyclerView = (RecyclerView)view.findViewById(R.id.peoplefragment_recycleview);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
         recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter());
+
         return view;
     }
     class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
+
         List<GuideModel> userModels;
         public PeopleFragmentRecyclerViewAdapter(){
             userModels = new ArrayList<>();
-            FirebaseDatabase.getInstance().getReference().child("Guide").addValueEventListener(new ValueEventListener() {
+            ValueEventListener guide = FirebaseDatabase.getInstance().getReference().child("Guide").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     userModels.clear(); //누적된 데이터 클리어
-                    for(DataSnapshot snapshot :dataSnapshot.getChildren()){
+                    String tmpUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                         userModels.add(snapshot.getValue(GuideModel.class)); //리스트에 추가
-                    }
+
+                        /* 가이드 모드일 때는 자신을 제외한 가이드 목록만 뛰우기*/
+                        if (mode == 1) {
+                            GuideModel tmp = userModels.get(userModels.size() - 1); // 가장 최근에 추가된 리스트 값
+
+                            if (tmp.uid.toString().equals(tmpUid)) {
+                                userModels.remove(userModels.size()-1);
+                                                            }
+                        }
+                    } // for문 끝
+
                     notifyDataSetChanged(); //새로고침
                 }
 
@@ -120,6 +140,7 @@ public class PeopleFragment extends Fragment {
                 placeTV = (TextView)view.findViewById(R.id.frienditem_place_textview);
                 lan1TV = (TextView)view.findViewById(R.id.frienditem_lan1_textview);
                 lan2TV = (TextView)view.findViewById(R.id.frienditem_lan2_textview);
+
             }
         }
     } //클래스 끝

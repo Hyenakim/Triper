@@ -17,9 +17,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.SingleLineTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText id;
     private EditText password;
 
+    private RadioButton radioTourist;
+    private RadioButton radioGuide;
+    private RadioGroup radioGroup;
     private Button login;
     private Button signup;
     private FirebaseAuth firebaseauth;
@@ -35,10 +41,35 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /* 전역변수 */
+        final MyApplication myApplication = (MyApplication)getApplication(); // 전역변수 가져오기
+        myApplication.setMode(0); // 관광객 모드로 초기화
+
         firebaseauth = FirebaseAuth.getInstance();
         firebaseauth.signOut();
         id = (EditText)findViewById(R.id.loginActivity_edittext_id);
         password = (EditText)findViewById(R.id.loginActivity_edittext_password);
+
+        /* 라디오 버튼 */
+        radioTourist = (RadioButton)findViewById(R.id.loginActivity_radio_user);
+        radioGuide = (RadioButton)findViewById(R.id.loginActivity_radio_guide);
+        radioGroup = (RadioGroup)findViewById(R.id.loginActivity_radioGroup);
+        radioTourist.setChecked(true);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.loginActivity_radio_user){
+                    myApplication.setMode(0); // 관광객 모드
+                    //Log.e("관광객 선택", String.valueOf(myApplication.getMode()));
+                }
+                else{
+                    myApplication.setMode(1); // 가이드 모드
+                    //Log.e("가이드 선택", String.valueOf(myApplication.getMode()));
+                }
+            }
+        });
 
         login = (Button)findViewById(R.id.loginActivity_button_login);
         signup = (Button)findViewById(R.id.loginActivity_button_sign);
@@ -72,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
+
     void loginEvent(){
         firebaseauth.signInWithEmailAndPassword(id.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override

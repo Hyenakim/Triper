@@ -8,10 +8,32 @@
     android:gravity="center"
     tools:context="com.example.gpsk1.triper.MainActivity">
 
+
     <ImageView
         android:src="@drawable/ic_launcher_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <RadioGroup
+        android:id="@+id/loginActivity_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="관광객(tourist)"
+            android:id="@+id/loginActivity_radio_user"
+            />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가이드(Guide)"
+            android:id="@+id/loginActivity_radio_guide"
+            android:layout_marginLeft="20dp"/>
+
+    </RadioGroup>
     <EditText
         android:id="@+id/loginActivity_edittext_id"
         android:layout_width="match_parent"
@@ -23,6 +45,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:hint="패스워드"/>
+
     <Button
         android:text="로그인"
         android:id="@+id/loginActivity_button_login"

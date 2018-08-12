@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -35,13 +36,10 @@ public class AccountFragment extends Fragment{
         profile = (ImageView)view.findViewById(R.id.fragment_account_imageView);
         logout = (Button)view.findViewById(R.id.fragment_account_button_logout);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser(); // 현재 사용자
         photoUrl = user.getPhotoUrl();
-        
 
-
-
-
+        /* 로그아웃 */
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
