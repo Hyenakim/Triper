@@ -109,6 +109,7 @@ public class PeopleFragment extends Fragment {
             ((CustomViewHolder)holder).lan1TV.setText(userModels.get(position).language1);
             ((CustomViewHolder)holder).lan2TV.setText(userModels.get(position).language2);
 
+            if(mode == 0){ // 관광객 모드일 때만 클릭 기능 부여
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -118,6 +119,7 @@ public class PeopleFragment extends Fragment {
                     startActivity(intent, activityOptions.toBundle());
                 }
             });
+            } // if 끝
 
         }
 
