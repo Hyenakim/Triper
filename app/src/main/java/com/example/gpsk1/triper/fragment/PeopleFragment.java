@@ -6,17 +6,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.gpsk1.triper.FilterActivity;
 import com.example.gpsk1.triper.Main2Activity;
 import com.example.gpsk1.triper.MyApplication;
 import com.example.gpsk1.triper.R;
@@ -36,6 +39,9 @@ import java.util.List;
 
 public class PeopleFragment extends Fragment {
     private int mode;
+    private FloatingActionButton floatButton;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -47,12 +53,12 @@ public class PeopleFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
         recyclerView.setAdapter(new PeopleFragmentRecyclerViewAdapter());
 
+        floatButton = (FloatingActionButton)view.findViewById(R.id.peoplefragment_floatingButton);
         return view;
     }
     class PeopleFragmentRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-
-
         List<GuideModel> userModels;
+
         public PeopleFragmentRecyclerViewAdapter(){
             userModels = new ArrayList<>();
             ValueEventListener guide = FirebaseDatabase.getInstance().getReference().child("Guide").addValueEventListener(new ValueEventListener() {
@@ -62,17 +68,19 @@ public class PeopleFragment extends Fragment {
                     String tmpUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                        userModels.add(snapshot.getValue(GuideModel.class)); //리스트에 추가
+                        /* 관광객 모드일 때는 검색 조건에 맞게 가이드 목록 띄우기*/
+                        if(mode == 0){
+                            userModels.add(snapshot.getValue(GuideModel.class)); //리스트에 추가
+                        } // 관광객 모드 if 끝
 
                         /* 가이드 모드일 때는 자신을 제외한 가이드 목록만 뛰우기*/
-                        if (mode == 1) {
+                        else {
+                            userModels.add(snapshot.getValue(GuideModel.class)); //리스트에 추가
                             GuideModel tmp = userModels.get(userModels.size() - 1); // 가장 최근에 추가된 리스트 값
-
                             if (tmp.uid.toString().equals(tmpUid)) {
-                                userModels.remove(userModels.size()-1);
-                                                            }
-                        }
+                                userModels.remove(userModels.size()-1); }
+                        } // if 끝
+
                     } // for문 끝
 
                     notifyDataSetChanged(); //새로고침
@@ -110,6 +118,7 @@ public class PeopleFragment extends Fragment {
             ((CustomViewHolder)holder).lan2TV.setText(userModels.get(position).language2);
 
             if(mode == 0){ // 관광객 모드일 때만 클릭 기능 부여
+                /* 클릭 시 채팅방 이동 */
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -119,6 +128,16 @@ public class PeopleFragment extends Fragment {
                     startActivity(intent, activityOptions.toBundle());
                 }
             });
+
+                /* 필터 버튼 클릭 */
+                floatButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(getActivity(), FilterActivity.class));
+                    }
+                });
+
+
             } // if 끝
 
         }

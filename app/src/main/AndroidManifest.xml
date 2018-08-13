@@ -21,7 +21,9 @@
         <activity android:name=".Main2Activity" />
         <activity android:name=".SelectActivity" />
         <activity android:name=".GuideActivity" />
-        <activity android:name=".chat.MessageActivity"></activity>
+        <activity android:name=".chat.MessageActivity" />
+        <activity android:name=".FilterActivity"
+            android:theme="@android:style/Theme.Dialog"/>
     </application>
 
 </manifest>
