@@ -9,8 +9,8 @@ public class MyApplication extends Application {
     public int getMode(){
         return mode;
     }
-
     public void setMode(int val){
         this.mode = val;
     }
+
 }

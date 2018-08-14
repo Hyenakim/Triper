@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,16 +53,15 @@ public class MessageActivity extends AppCompatActivity {
     private String uid;
     private String chatRoomUid;
 
-
     private RecyclerView recyclerView;
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
-
 
         uid = FirebaseAuth.getInstance().getCurrentUser().getUid();//채팅을 요구하는 아이디(로그인된 아이디)
         destinationUid = getIntent().getStringExtra("destinationUid"); //채팅을 당하는 아이디
@@ -125,12 +125,21 @@ public class MessageActivity extends AppCompatActivity {
     }
     class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
+        private int mode;
+
         List<ChatModel.Comment> comments;
         GuideModel userModel;
+        UserModel tourModel;
+
         public RecyclerViewAdapter(){
             comments = new ArrayList<>();
 
-            FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
+            MyApplication myApplication = (MyApplication)getApplication();
+            mode = myApplication.getMode(); // 모드 번호 받기  - 전역변수
+
+            if(mode == 0){ // 관광객 모드
+
+            FirebaseDatabase.getInstance().getReference().child("Guide").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     userModel = dataSnapshot.getValue(GuideModel.class);
@@ -142,6 +151,21 @@ public class MessageActivity extends AppCompatActivity {
 
                 }
             });
+            } // if 끝
+            else{ // 가이드 모드
+                FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        tourModel = dataSnapshot.getValue(UserModel.class);
+                        getMessageList();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            } // else 끝
         }
         void getMessageList(){
             FirebaseDatabase.getInstance().getReference().child("chatrooms").child(chatRoomUid).child("comments").addValueEventListener(new ValueEventListener() {
@@ -164,6 +188,7 @@ public class MessageActivity extends AppCompatActivity {
         }
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_message,parent,false);
             return new MessageViewHolder(view);
         }
@@ -173,6 +198,8 @@ public class MessageActivity extends AppCompatActivity {
 
             MessageViewHolder messageViewHolder = ((MessageViewHolder)holder);
 
+            /* 관광객 모드 */
+            if(mode == 0) {
             //내가보낸 메세지
             if(comments.get(position).uid.equals(uid)) {
                 messageViewHolder.textView_message.setText(comments.get(position).message);
@@ -193,6 +220,31 @@ public class MessageActivity extends AppCompatActivity {
                 messageViewHolder.textView_message.setTextSize(25);
                 messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
             }
+            }
+            /* 가이드 모드 */
+            else{
+                //내가보낸 메세지
+                if(comments.get(position).uid.equals(uid)) {
+                    messageViewHolder.textView_message.setText(comments.get(position).message);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.rightbubble);
+                    messageViewHolder.linearLayout_destination.setVisibility(View.INVISIBLE);
+                    messageViewHolder.textView_message.setTextSize(25);
+                    messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
+                    //상대방이 보낸 메세지
+                }else{
+//                Glide.with(holder.itemView.getContext())
+//                        .load(userModel.profilImageUrl)
+//                        .apply(new RequestOptions().circleCrop())
+//                        .into(messageViewHolder.imageView_profile);
+                    messageViewHolder.textView_name.setText(tourModel.userName);
+                    messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
+                    messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
+                    messageViewHolder.textView_message.setText(comments.get(position).message);
+                    messageViewHolder.textView_message.setTextSize(25);
+                    messageViewHolder.linearLayout_main.setGravity(Gravity.LEFT);
+                }
+            }
+
             long unixTime = (long) comments.get(position).timestamp;
             Date date = new Date(unixTime);
             simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
