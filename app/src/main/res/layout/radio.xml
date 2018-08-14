@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <item android:state_checked="false" android:drawable="@drawable/unchk"/>  // 선택하지 않을때
+
+    <item android:state_checked="true" android:drawable="@drawable/chk"/>    // 선택했을때
+
+    <item android:drawable="@drawable/unchk"/> //기본 이미지
+
+</selector>

@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:layout_height="match_parent"
-
+    android:background="@drawable/main_back"
     tools:context="com.example.gpsk1.triper.SignupActivity">
 
     <ImageView
@@ -18,23 +18,34 @@
     <EditText
         android:id="@+id/signupActivity_edittext_email"
         android:hint="이메일"
-        android:layout_width="match_parent"
+        android:background="@drawable/round_edittext"
+        android:padding="5dip"
+        android:layout_width="350dp"
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/signupActivity_edittext_name"
         android:hint="이름"
-        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/round_edittext"
+        android:padding="5dip"
+        android:layout_width="350dp"
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/signupActivity_edittext_password"
         android:hint="패스워드"
-        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/round_edittext"
+        android:padding="5dip"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"/>
     <Button
         android:text="회원가입"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
         android:id="@+id/signupActivity_edittext_signup"
-        android:layout_width="match_parent"
+        android:background="@drawable/round_button"
+        android:layout_width="350dp"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

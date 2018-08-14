@@ -6,10 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
+    android:background="@drawable/main_back"
     tools:context=".GuideActivity">
 
     <ImageView
-        android:src="@drawable/baseline_add_to_photos_black_24"
+        android:src="@drawable/baseline_add_to_photos_black_48"
         android:id="@+id/GuideActivity_imageview_profile"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -17,17 +18,26 @@
     <EditText
         android:id="@+id/GuideActivity_edittext_email"
         android:hint="이메일"
-        android:layout_width="match_parent"
+        android:background="@drawable/round_edittext"
+        android:padding="5dip"
+        android:layout_marginTop="25dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/GuideActivity_edittext_name"
         android:hint="이름"
-        android:layout_width="match_parent"
+        android:background="@drawable/round_edittext"
+        android:padding="5dip"
+        android:layout_marginTop="5dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content" />
     <EditText
         android:id="@+id/GuideActivity_edittext_password"
         android:hint="패스워드"
-        android:layout_width="match_parent"
+        android:background="@drawable/round_edittext"
+        android:padding="5dip"
+        android:layout_marginTop="5dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:inputType="textPassword"/>
 
@@ -36,6 +46,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
     <TextView
+        android:layout_marginTop="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="지역"
@@ -69,8 +80,11 @@
 
     <Button
         android:text="회원가입"
+        android:layout_marginTop="15dp"
+        android:textColor="#FFFFFF"
         android:id="@+id/GuideActivity_button_signup"
-        android:layout_width="match_parent"
+        android:background="@drawable/round_button"
+        android:layout_width="350dp"
         android:layout_height="wrap_content" />
 
 </LinearLayout>
