@@ -6,7 +6,7 @@
     android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#eeeeee">
+    android:background="#FFE6E6FA">
 
     <TextView
         android:layout_width="match_parent"
@@ -14,25 +14,28 @@
         android:text="필터"
         android:textAlignment="center"
         android:textSize="20dp"
-        android:textColor="#fff"
-        android:background="#ff7a00"/>
+        android:textColor="#FF000000"
+        android:background="@color/yellow"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="언어"
+            android:layout_marginLeft="50dp"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="50dp"/>
+            android:text="언어"
+            android:textColor="@color/colorAccent" />
     <Spinner
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:id="@+id/filterActivity_spinner_language"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
+        android:background="#FFFFFAF0"
         ></Spinner>
 
     </LinearLayout>
@@ -46,20 +49,26 @@
             android:layout_height="wrap_content"
             android:text="지역"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="50dp"/>
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/colorAccent"/>
         <Spinner
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:id="@+id/filterActivity_spinner_place"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
+            android:background="#FFFFFAF0"
             ></Spinner>
     </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
         android:text="확인"
-        android:id="@+id/filterActivity_button_OK"/>
+        android:textSize="18dp"
+        android:textColor="@color/white"
+        android:id="@+id/filterActivity_button_OK"
+        android:background="@color/colorPrimary"/>
 
 </LinearLayout>
