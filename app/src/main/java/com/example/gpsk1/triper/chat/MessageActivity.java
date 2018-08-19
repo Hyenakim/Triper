@@ -1,5 +1,6 @@
 package com.example.gpsk1.triper.chat;
 
+import android.net.Uri;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -194,9 +195,9 @@ public class MessageActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
 
-            MessageViewHolder messageViewHolder = ((MessageViewHolder)holder);
+            final MessageViewHolder messageViewHolder = ((MessageViewHolder)holder);
 
             /* 관광객 모드 */
             if(mode == 0) {
@@ -209,10 +210,12 @@ public class MessageActivity extends AppCompatActivity {
                 messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
                 //상대방이 보낸 메세지
             }else{
-//                Glide.with(holder.itemView.getContext())
-//                        .load(userModel.profilImageUrl)
-//                        .apply(new RequestOptions().circleCrop())
-//                        .into(messageViewHolder.imageView_profile);
+                FirebaseStorage.getInstance().getReference().child("userImages").child(userModel.uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Glide.with(holder.itemView.getContext()).load(uri).apply(new RequestOptions().circleCrop()).into(messageViewHolder.imageView_profile);
+                    }
+                });
                 messageViewHolder.textView_name.setText(userModel.guideName);
                 messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                 messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);
@@ -232,10 +235,12 @@ public class MessageActivity extends AppCompatActivity {
                     messageViewHolder.linearLayout_main.setGravity(Gravity.RIGHT);
                     //상대방이 보낸 메세지
                 }else{
-//                Glide.with(holder.itemView.getContext())
-//                        .load(userModel.profilImageUrl)
-//                        .apply(new RequestOptions().circleCrop())
-//                        .into(messageViewHolder.imageView_profile);
+                    FirebaseStorage.getInstance().getReference().child("userImages").child(tourModel.uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(holder.itemView.getContext()).load(uri).apply(new RequestOptions().circleCrop()).into(messageViewHolder.imageView_profile);
+                        }
+                    });
                     messageViewHolder.textView_name.setText(tourModel.userName);
                     messageViewHolder.linearLayout_destination.setVisibility(View.VISIBLE);
                     messageViewHolder.textView_message.setBackgroundResource(R.drawable.leftbubble);

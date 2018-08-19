@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,14 +18,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.gpsk1.triper.FilterActivity;
 import com.example.gpsk1.triper.R;
 import com.example.gpsk1.triper.chat.MessageActivity;
 import com.example.gpsk1.triper.model.GuideModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,13 +130,16 @@ public class FilteredFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-//이미지 올리기
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
-//            Glide.with(holder.itemView.getContext())
-//                    .load(userModels.get(position).profilImageUrl)
-//                    .apply(new RequestOptions().circleCrop())
-//                    .into(((CustomViewHolder)holder).imageView);
+            //이미지 올리기
+            FirebaseStorage.getInstance().getReference().child("userImages").child(filterModel.get(position).uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(holder.itemView.getContext()).load(uri).apply(new RequestOptions().circleCrop()).into(((CustomViewHolder)holder).imageView);
+                }
+            });
+
 
             //텍스트 올리기
             ((CustomViewHolder)holder).textView.setText(filterModel.get(position).guideName);

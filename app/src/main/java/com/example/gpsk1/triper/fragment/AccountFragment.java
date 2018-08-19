@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.gpsk1.triper.MainActivity;
 import com.example.gpsk1.triper.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.FirebaseStorage;
@@ -26,7 +27,6 @@ public class AccountFragment extends Fragment{
     private Button logout;
     private ImageView profile;
     private FirebaseUser user;
-    private Uri photoUrl;
 
     @Nullable
     @Override
@@ -37,7 +37,13 @@ public class AccountFragment extends Fragment{
         logout = (Button)view.findViewById(R.id.fragment_account_button_logout);
 
         user = FirebaseAuth.getInstance().getCurrentUser(); // 현재 사용자
-        photoUrl = user.getPhotoUrl();
+
+        FirebaseStorage.getInstance().getReference().child("userImages").child(user.getUid()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getActivity()).load(uri).into(profile);
+            }
+        });
 
         /* 로그아웃 */
         logout.setOnClickListener(new View.OnClickListener() {

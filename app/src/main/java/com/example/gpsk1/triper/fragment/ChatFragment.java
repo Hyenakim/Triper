@@ -3,6 +3,7 @@ package com.example.gpsk1.triper.fragment;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,11 +25,13 @@ import com.example.gpsk1.triper.chat.MessageActivity;
 import com.example.gpsk1.triper.model.ChatModel;
 import com.example.gpsk1.triper.model.GuideModel;
 import com.example.gpsk1.triper.model.UserModel;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
 
 import org.w3c.dom.Text;
 
@@ -109,15 +112,17 @@ public class ChatFragment extends Fragment {
 
             /* 관광객일 때 채팅 리스트 */
             if(mode == 0){
-            FirebaseDatabase.getInstance().getReference().child("Guide").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
+                final String finalDestinationUid = destinationUid;
+                FirebaseDatabase.getInstance().getReference().child("Guide").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                    GuideModel guideModel = dataSnapshot.getValue(GuideModel.class);
-                    /*Glide.with(customViewHolder.itemView.getContext())
-                            .load(userModel.profieImageUrl)
-                            .apply(new RequestOptions().circleCrop())
-                            .into(customViewHolder.imageView); */
-                    //System.out.println(guideModel.guideName);
+                    FirebaseStorage.getInstance().getReference().child("userImages").child(finalDestinationUid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                          Glide.with(customViewHolder.itemView.getContext()).load(uri).apply(new RequestOptions().circleCrop()).into((customViewHolder).imageView);
+                        }
+                    });
                     customViewHolder.textView_title.setText(guideModel.guideName); // 상대방 이름 = 채팅방 이름
                 }
 
@@ -129,15 +134,17 @@ public class ChatFragment extends Fragment {
                   }
                   /* 가이드 일 때 채팅 리스트*/
                   else {
+                final String finalDestinationUid1 = destinationUid;
                 FirebaseDatabase.getInstance().getReference().child("users").child(destinationUid).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         UserModel userModel = dataSnapshot.getValue(UserModel.class);
-                    /*Glide.with(customViewHolder.itemView.getContext())
-                            .load(userModel.profieImageUrl)
-                            .apply(new RequestOptions().circleCrop())
-                            .into(customViewHolder.imageView); */
-                        //System.out.println(guideModel.guideName);
+                        FirebaseStorage.getInstance().getReference().child("userImages").child(finalDestinationUid1).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(customViewHolder.itemView.getContext()).load(uri).apply(new RequestOptions().circleCrop()).into((customViewHolder).imageView);
+                            }
+                        });
                         customViewHolder.textView_title.setText(userModel.userName); // 상대방 이름 = 채팅방 이름
                     }
 

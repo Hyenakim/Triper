@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,17 +20,25 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.gpsk1.triper.FilterActivity;
 import com.example.gpsk1.triper.Main2Activity;
 import com.example.gpsk1.triper.R;
 import com.example.gpsk1.triper.chat.MessageActivity;
 import com.example.gpsk1.triper.model.GuideModel;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -100,8 +109,14 @@ public class PeopleFragment extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+        public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
 
+            FirebaseStorage.getInstance().getReference().child("userImages").child(userModels.get(position).uid).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(holder.itemView.getContext()).load(uri).apply(new RequestOptions().circleCrop()).into(((CustomViewHolder)holder).imageView);
+                }
+            });
             //이미지 올리기
 
 //            Glide.with(holder.itemView.getContext())
