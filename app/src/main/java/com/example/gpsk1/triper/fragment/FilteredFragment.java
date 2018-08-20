@@ -99,6 +99,9 @@ public class FilteredFragment extends Fragment {
                             else if( place != null && language != null){ // 장소 언어 조건 모두 존재할 때
                                 GuideModel tmp = filterModel.get(filterModel.size() - 1); // 가장 최근에 추가된 리스트 값
                                 if( !tmp.place.toString().equals(place) ) {
+                                    filterModel.remove(filterModel.size() - 1); // 장소 달라서 삭제
+                                }
+                                else{
                                     if( ! tmp.language1.toString().equals(language) ){
                                         if(tmp.language2 == null){
                                             filterModel.remove(filterModel.size() - 1); // 언어가 다르면 삭제

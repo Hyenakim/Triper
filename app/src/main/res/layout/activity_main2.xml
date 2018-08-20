@@ -7,6 +7,7 @@
     android:background="@color/white"
     tools:context=".Main2Activity">
 
+
     <FrameLayout
         android:id="@+id/main2activity_framelayout"
         android:layout_alignParentTop="true"
