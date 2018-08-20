@@ -103,11 +103,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loginEvent(){
+
         firebaseauth.signInWithEmailAndPassword(id.getText().toString(),password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //로그인 완료 판단
                 //실패했을 경우 작동
+
                 if(!task.isSuccessful()){
                     Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
                 }

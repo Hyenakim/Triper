@@ -4,19 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/yellow"
+    android:id="@+id/main2activity_relativeLayout"
     tools:context=".Main2Activity">
 
 
     <FrameLayout
         android:id="@+id/main2activity_framelayout"
-        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_alignParentTop="true">
 
     </FrameLayout>
+
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,5 +30,15 @@
         app:menu="@menu/buttom_navigation_main">
 
     </android.support.design.widget.BottomNavigationView>
+
+    <ImageView
+        android:id="@+id/howto"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/howto" />
 
 </RelativeLayout>

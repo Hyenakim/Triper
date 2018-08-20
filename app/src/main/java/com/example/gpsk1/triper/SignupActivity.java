@@ -72,6 +72,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(email.getText().toString()==null||name.getText().toString()==null||password.getText().toString()==null||imageUri==null) { //빈칸이 있으면 다시
+                    Toast.makeText(SignupActivity.this, "빈 칸이 존재합니다.", Toast.LENGTH_LONG).show();
                     return;
                 }
                 FirebaseAuth.getInstance()

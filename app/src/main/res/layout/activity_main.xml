@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/main_xxxhdpi" />
+        android:src="@drawable/main" />
 
     <RadioGroup
         android:id="@+id/loginActivity_radioGroup"
