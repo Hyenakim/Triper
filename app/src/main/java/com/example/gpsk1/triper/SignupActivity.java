@@ -99,11 +99,8 @@ public class SignupActivity extends AppCompatActivity {
                                                 SignupActivity.this.finish();//회원가입 성공시 창 닫기
                                             }
                                         });
-
                                     }
                                 });
-
-
                             }
                         });
             }

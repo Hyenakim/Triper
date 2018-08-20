@@ -62,11 +62,9 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.loginActivity_radio_user){
                     myApplication.setMode(0); // 관광객 모드
-                    //Log.e("관광객 선택", String.valueOf(myApplication.getMode()));
                 }
                 else{
                     myApplication.setMode(1); // 가이드 모드
-                    //Log.e("가이드 선택", String.valueOf(myApplication.getMode()));
                 }
             }
         });
